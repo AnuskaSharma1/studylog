@@ -1,0 +1,9 @@
+[project]
+name = "studylog"
+version = "0.1.0"
+description = "StudyLog: a Django app for logging study sessions and tracking weekly goals"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.1.2",
+]
