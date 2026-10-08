@@ -1,0 +1,48 @@
+{% extends "tracker/base.html" %}
+{% block content %}
+<section class="stats">
+  <div class="card"><span class="big">{{ week_total }}</span>this week</div>
+  <div class="card"><span class="big">{{ streak }}🔥</span>day streak</div>
+  <div class="card goal">
+    <div class="bar"><div class="fill {% if goal_met %}done{% endif %}" style="width: {{ goal_pct }}%"></div></div>
+    {% if goal_met %}Goal of {{ goal }} reached! 🎉{% else %}{{ remaining }} left to hit {{ goal }}{% endif %}
+    <form method="post" action="{% url 'tracker:goal' %}" class="inline">
+      {% csrf_token %}{{ goal_form.minutes }}<button>Set goal</button>
+    </form>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="panel">
+    <h2>Log a study session</h2>
+    <form method="post" class="stack">
+      {% include "tracker/_form.html" %}
+      <datalist id="course-list">{% for c in known_courses %}<option value="{{ c }}">{% endfor %}</datalist>
+      <button class="primary">Add session</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Last 7 days</h2>
+    <div class="chart">
+      {% for d in chart %}
+        <div class="col" title="{{ d.minutes }} min">
+          <div class="b" style="height: {{ d.pct }}%"></div>
+          <small>{{ d.label }}</small>
+        </div>
+      {% endfor %}
+    </div>
+    <h2>By course</h2>
+    {% for c in courses %}
+      <a class="course" href="{% url 'tracker:course' c.course %}">
+        <span>{{ c.course }} <small>({{ c.count }})</small></span><span>{{ c.pretty }} · {{ c.pct }}%</span>
+      </a>
+    {% empty %}<p class="muted">No sessions yet — log your first one!</p>{% endfor %}
+  </section>
+</div>
+
+<section class="panel">
+  <h2>Recent sessions</h2>
+  {% include "tracker/_table.html" %}
+</section>
+{% endblock %}

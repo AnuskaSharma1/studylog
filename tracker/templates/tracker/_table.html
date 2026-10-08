@@ -1,0 +1,19 @@
+<table>
+  <thead><tr><th>Date</th><th>Course</th><th>Minutes</th><th>Notes</th><th></th></tr></thead>
+  <tbody>
+  {% for s in sessions %}
+    <tr>
+      <td>{{ s.date|date:"M j" }}</td>
+      <td><a href="{% url 'tracker:course' s.course %}">{{ s.course }}</a></td>
+      <td>{{ s.minutes }}</td>
+      <td>{{ s.notes }}</td>
+      <td class="actions">
+        <a href="{% url 'tracker:edit' s.pk %}">Edit</a>
+        <form method="post" action="{% url 'tracker:delete' s.pk %}" onsubmit="return confirm('Delete this session?')">
+          {% csrf_token %}<button class="link">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% empty %}<tr><td colspan="5" class="muted">Nothing here yet.</td></tr>{% endfor %}
+  </tbody>
+</table>

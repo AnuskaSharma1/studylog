@@ -1,0 +1,11 @@
+{% extends "tracker/base.html" %}
+{% block title %}Edit session · StudyLog{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h2>Edit session</h2>
+  <form method="post" class="stack">
+    {% include "tracker/_form.html" %}
+    <button class="primary">Save</button> <a href="{% url 'tracker:dashboard' %}">Cancel</a>
+  </form>
+</section>
+{% endblock %}

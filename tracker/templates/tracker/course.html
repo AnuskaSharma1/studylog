@@ -1,0 +1,12 @@
+{% extends "tracker/base.html" %}
+{% block title %}{{ course }} · StudyLog{% endblock %}
+{% block content %}
+<p><a href="{% url 'tracker:dashboard' %}">← Back</a></p>
+<h1>{{ course }}</h1>
+<section class="stats">
+  <div class="card"><span class="big">{{ total }}</span>total</div>
+  <div class="card"><span class="big">{{ count }}</span>sessions</div>
+  <div class="card"><span class="big">{{ avg }}</span>average</div>
+</section>
+<section class="panel">{% include "tracker/_table.html" %}</section>
+{% endblock %}

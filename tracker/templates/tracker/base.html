@@ -1,0 +1,19 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}StudyLog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+</head>
+<body>
+  <header class="top">
+    <a href="{% url 'tracker:dashboard' %}" class="brand">📚 StudyLog</a>
+    <nav><a href="{% url 'tracker:export' %}">Export CSV</a> · <a href="/admin/">Admin</a></nav>
+  </header>
+  <main>
+    {% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
