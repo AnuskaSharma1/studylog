@@ -11,4 +11,6 @@ urlpatterns = [
     path("course/<str:course>/", views.course_detail, name="course"),
     path("goal/", views.update_goal, name="goal"),
     path("export.csv", views.export_csv, name="export"),
+    path("clear/", views.clear_sessions, name="clear"),
 ]
+

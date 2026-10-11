@@ -135,3 +135,9 @@ def export_csv(request):
     for s in StudySession.objects.order_by("date"):
         writer.writerow([s.date, s.course, s.minutes, s.notes])
     return response
+
+@require_POST
+def clear_sessions(request):
+    count, _ = StudySession.objects.all().delete()
+    messages.info(request, f"Cleared {count} session{'s' if count != 1 else ''}.")
+    return redirect("tracker:dashboard")

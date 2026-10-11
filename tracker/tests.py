@@ -54,3 +54,11 @@ class StudySessionTests(TestCase):
         StudySession.objects.create(course="X", minutes=10, notes="n")
         r = self.client.get(reverse("tracker:export"))
         self.assertIn("X,10,n", r.content.decode())
+        
+    def test_clear_all_sessions(self):
+        StudySession.objects.create(course="X", minutes=10)
+        StudySession.objects.create(course="Y", minutes=20)
+        self.assertEqual(self.client.get(reverse("tracker:clear")).status_code, 405)
+        r = self.client.post(reverse("tracker:clear"))
+        self.assertRedirects(r, reverse("tracker:dashboard"))
+        self.assertEqual(StudySession.objects.count(), 0)

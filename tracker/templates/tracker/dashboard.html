@@ -44,5 +44,12 @@
 <section class="panel">
   <h2>Recent sessions</h2>
   {% include "tracker/_table.html" %}
+    {% if sessions %}
+    <form method="post" action="{% url 'tracker:clear' %}"
+          onsubmit="return confirm('Delete ALL sessions? This cannot be undone.')">
+      {% csrf_token %}
+      <button class="danger">Clear all sessions</button>
+    </form>
+  {% endif %}
 </section>
 {% endblock %}
