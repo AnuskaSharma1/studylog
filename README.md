@@ -46,15 +46,4 @@ tracker/
   static/        style.css (includes dark mode)
   tests.py       8 unit/integration tests
 ```
-
-## What I learned
-
-- **uv**: `uv init` makes a project, `uv add django` updates `pyproject.toml` *and* `uv.lock`, and `uv run` runs commands inside the venv without activating it. Committing `uv.lock` is what keeps a teammate's install identical to mine.
-- **Django request flow**: URL → view → (model/form) → template. Using Post/Redirect/Get after a form submit stops the browser from re-submitting on refresh.
-- **ORM aggregation**: `values("course").annotate(Sum("minutes"))` does the GROUP BY inside the database.
-- **Migrations**: when you change a model, `makemigrations` writes the change to a file, `migrate` applies it, and the files go into git.
-- **Security defaults**: `{% csrf_token %}` on every POST form. Delete only accepts POST (`@require_POST`), so a link can't delete data.
-
-## Next steps / deployment notes
-
-For production: set `DEBUG=False`, read `SECRET_KEY` and `ALLOWED_HOSTS` from environment variables, switch to Postgres (`dj-database-url` + `psycopg`), serve static files with WhiteNoise, and run with Gunicorn. Then add user accounts so each person only sees their own sessions.
+es (`dj-database-url` + `psycopg`), serve static files with WhiteNoise, and run with Gunicorn. Then add user accounts so each person only sees their own sessions.
